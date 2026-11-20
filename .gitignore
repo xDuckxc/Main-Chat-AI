@@ -11,4 +11,3 @@ dist/
 # SQLite database ของแอป (ข้อมูลที่สร้างตอนรัน ไม่ใช่โค้ด) รวมไฟล์ชั่วคราว -journal/-wal/-shm
 *.db*
 .vercel
-.env*
