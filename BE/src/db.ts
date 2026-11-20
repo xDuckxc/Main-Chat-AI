@@ -148,6 +148,18 @@ export interface StudentData {
   projects: { title: string; description: string; tech: string }[];
 }
 
+// ตรวจสอบว่าตาราง profile ยังไม่มีรายการ (เช่น chat.db ใหม่ที่ยังไม่ได้ seed)
+export function portfolioIsEmpty(): boolean {
+  try {
+    const row = db.prepare("SELECT COUNT(*) AS cnt FROM profile").get() as
+      | { cnt: number }
+      | undefined;
+    return !row || (row.cnt ?? 0) === 0;
+  } catch {
+    return true;
+  }
+}
+
 export function saveAllStudents(students: StudentData[]): void {
   db.exec("BEGIN");
   try {

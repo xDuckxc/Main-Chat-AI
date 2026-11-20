@@ -4,7 +4,7 @@ import { saveAllStudents } from "./db";
 const GROUP_NAME = "Linux";
 
 // กำหนดรายชื่อนักศึกษา
-const students = [
+export const students = [
   {
     profile: {
       name: "นรินทร์ฤทธิ์ หิรัญอาจ",
@@ -107,6 +107,12 @@ const students = [
   },
 ];
 
-// บันทึกข้อมูลทั้งหมดลงฐานข้อมูล
-saveAllStudents(students);
-console.log(`✅ บันทึกข้อมูลนักศึกษา ${students.length} คน (กลุ่ม: ${GROUP_NAME}) เรียบร้อยแล้ว!`);
+export function runSeed(): void {
+  saveAllStudents(students);
+  console.log(`✅ บันทึกข้อมูลนักศึกษา ${students.length} คน (กลุ่ม: ${GROUP_NAME}) เรียบร้อยแล้ว!`);
+}
+
+// เมื่อรันไฟล์นี้โดยตรง (npm run seed): บันทึกข้อมูนทันที
+if (process.argv[1] && process.argv[1].endsWith("seed.ts")) {
+  runSeed();
+}

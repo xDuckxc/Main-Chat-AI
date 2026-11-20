@@ -6,9 +6,11 @@ import {
   listMessages,
   recentMessages,
   updateMessage,
+  portfolioIsEmpty,
 } from "./db";
 import { getReply } from "./reply";
 import { isLlmConfigured } from "./llm";
+import { runSeed } from "./seed";
 
 try {
   process.loadEnvFile();
@@ -16,6 +18,11 @@ try {
 }
 
 const app = express();
+
+// ถ้าฐานข้อมูนยังว่างเปล่า (เช่น chat.db บน Vercel ที่เพิ่งเริ่มต้น): seed ด้วยตัวเองเพื่อให้ Chat AI มีข้อมูน portfolio และแนะนำได้ทันที
+if (portfolioIsEmpty()) {
+  runSeed();
+}
 
 const MAX_HISTORY = 10;
 
